@@ -17,7 +17,8 @@ public class Main {
 
         for (int i = 0; i < n1; i++)
         {
-            Thread thread = new Thread(new Exercice2Runnable("Hilo " + (i + 1)));
+            Thread thread = new Thread(new Exercice2Runnable());
+            thread.setName("Hilo " + (i + 1));
             thread.start();
         }
     }

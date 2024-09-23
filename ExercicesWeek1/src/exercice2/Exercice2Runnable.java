@@ -4,14 +4,6 @@ import java.util.Random;
 
 public class Exercice2Runnable implements Runnable
 {
-    private final String threadName;
-    public Exercice2Runnable(String threadName) throws IllegalArgumentException
-    {
-        if (threadName == null || threadName.isEmpty())
-            throw new IllegalArgumentException();
-        this.threadName = threadName;
-    }
-
     @Override
     public void run()
     {
@@ -60,18 +52,13 @@ public class Exercice2Runnable implements Runnable
     {
         if (n < 0)
             throw new IllegalArgumentException();
-        System.out.println(threadName + ": Mostrando números primos hasta hasta el " + n);
+        System.out.println(Thread.currentThread().getName() + ": Mostrando números primos hasta hasta el " + n);
     }
 
     private void threadMessage(int n) throws IllegalArgumentException
     {
         if (n < 0)
             throw new IllegalArgumentException();
-        System.out.println(threadName + ": " + n);
-    }
-
-    public String getThreadName()
-    {
-        return threadName;
+        System.out.println(Thread.currentThread().getName() + ": " + n);
     }
 }

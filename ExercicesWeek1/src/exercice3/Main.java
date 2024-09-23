@@ -19,14 +19,15 @@ public class Main
             return;
         }
 
-        List<ThreadWithRunnable> threads = new java.util.ArrayList<>();
+        List<Thread> threads = new java.util.ArrayList<>();
 
         for (int i = 0; i < n1; i++)
         {
-            Exercice2Runnable runnable = new Exercice2Runnable("Hilo " + (i + 1));
+            Exercice2Runnable runnable = new Exercice2Runnable();
             Thread thread = new Thread(runnable);
+            thread.setName("Hilo " + (i + 1));
             thread.start();
-            threads.add(new ThreadWithRunnable(thread, runnable));
+            threads.add(thread);
         }
 
         do
@@ -34,10 +35,8 @@ public class Main
             try
             {
                 Thread.sleep(1000);
-                for (ThreadWithRunnable threadWithRunnable : threads) {
-                    Thread thread = threadWithRunnable.thread();
-                    System.out.println(thread.getId() + " " + threadWithRunnable.getThreadName() + " " + thread.getState());
-                }
+                for (Thread thread : threads)
+                    System.out.println(thread.getId() + " " + thread.getName() + " " + thread.getState());
             }
             catch (InterruptedException e)
             {
@@ -47,13 +46,13 @@ public class Main
         while (isAnyThreadAlive(threads));
     }
 
-    private static boolean isAnyThreadAlive(List<ThreadWithRunnable> threads)
+    private static boolean isAnyThreadAlive(List<Thread> threads)
     {
         if (threads == null || threads.isEmpty())
             return false;
-        for (ThreadWithRunnable threadWithRunnable : threads)
+        for (Thread thread : threads)
         {
-            if (threadWithRunnable.thread().isAlive())
+            if (thread.isAlive())
                 return true;
         }
         return false;
