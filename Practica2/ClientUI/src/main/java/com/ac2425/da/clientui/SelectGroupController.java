@@ -22,24 +22,29 @@ public class SelectGroupController implements Initializable
         updateGroupList();
     }
 
-    private void updateGroupList() {
-        Task<String> task = new Task<>() {
+    private void updateGroupList()
+    {
+        Task<String> task = new Task<>()
+        {
             @Override
-            protected String call() throws Exception {
-                return SocketConnection.getIn().readLine(); // Leer línea completa
+            protected String call() throws Exception
+            {
+                return SocketConnection.getIn().readLine();
             }
         };
 
         task.setOnSucceeded(event -> {
             String groupList = task.getValue();
-            if (groupList != null && !groupList.isEmpty()) {
+            if (groupList != null && !groupList.isEmpty())
+            {
                 System.out.println("Grupos recibidos: " + groupList);
                 String[] groups = groupList.replace(";", "").split(",");
                 groupListView.getItems().clear();
-                for (String group : groups) {
+                for (String group : groups)
                     groupListView.getItems().add(group.trim());
-                }
-            } else {
+            }
+            else
+            {
                 System.out.println("No se recibieron grupos.");
             }
         });
@@ -72,5 +77,37 @@ public class SelectGroupController implements Initializable
         {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void joinGroup()
+    {
+        String selectedGroup = groupListView.getSelectionModel().getSelectedItem();
+        if (selectedGroup != null)
+        {
+            UserData.setGroupname(selectedGroup);
+            SocketConnection.getOut().println("/join " + selectedGroup);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("client-view.fxml"));
+            Scene scene = groupListView.getScene();
+            try
+            {
+                scene.setRoot(loader.load());
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @FXML
+    private void refreshGroups()
+    {
+        updateGroupList();
+    }
+
+    public void ReinitializeGroupList()
+    {
+        updateGroupList();
     }
 }

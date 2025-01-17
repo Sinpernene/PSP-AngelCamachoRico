@@ -22,11 +22,13 @@
       <padding>
         <Insets top="10" right="10" bottom="10" left="10"/>
       </padding>
+      <Button text="Salir"
+              onAction="#leaveGroup"
+              style="-fx-background-color: #d62c46; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px; -fx-background-radius: 5px;" />
       <TextField fx:id="messageInput"
                  promptText="Escribe tu mensaje..."
                  style="-fx-font-size: 14px; -fx-padding: 10px; -fx-background-radius: 5px;" />
       <Button text="Enviar"
-              fx:id="sendButton"
               onAction="#sendMessage"
               style="-fx-background-color: #4CAF50; -fx-text-fill: white; -fx-font-size: 14px; -fx-padding: 10px; -fx-background-radius: 5px;" />
     </HBox>

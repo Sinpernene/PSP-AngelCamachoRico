@@ -3,7 +3,6 @@ import java.net.*;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 public class ChatServer {
     private static final int PORT = 12345;
@@ -26,13 +25,17 @@ public class ChatServer {
         }
     }
 
-    public static void broadcastToGroup(String groupName, String message)
+    public static void broadcastToGroup(String groupName, String message, ClientHandler sender)
     {
         List<ClientHandler> groupMembers = groups.get(groupName);
         if (groupMembers != null)
         {
+            System.out.println("Broadcasting message to group " + groupName + " from " + sender.getName());
             for (ClientHandler member : groupMembers)
-                member.sendMessage(message);
+            {
+                if (member != sender)
+                    member.sendMessage(sender.getName() + ": " + message);
+            }
         }
     }
 
@@ -40,6 +43,8 @@ public class ChatServer {
     {
         System.out.println("Adding " + client.getName() + " to group " + groupName);
         groups.computeIfAbsent(groupName, k -> new ArrayList<>()).add(client);
+        for (ClientHandler member : groups.get(groupName))
+            member.sendMessage(client.getName() + " se ha unido al grupo.");
     }
 
     public static String getGroups() {
@@ -54,6 +59,16 @@ public class ChatServer {
     {
         List<ClientHandler> groupMembers = groups.get(groupName);
         if (groupMembers != null)
+        {
             groupMembers.remove(client);
+            for (ClientHandler member : groupMembers)
+                member.sendMessage(client.getName() + " ha salido del grupo.");
+            if (groupMembers.isEmpty())
+            {
+                System.out.println("Removing group " + groupName);
+                groups.remove(groupName);
+            }
+        }
+        System.out.println("Removing " + client.getName() + " from group " + groupName);
     }
 }

@@ -38,7 +38,7 @@ class ClientHandler implements Runnable
                     System.out.println("Broadcast a grupo");
                     String[] parts = message.split(" ", 3);
                     if (parts.length == 3)
-                        ChatServer.broadcastToGroup(parts[1], parts[2]);
+                        ChatServer.broadcastToGroup(parts[1], parts[2], this);
                 }
                 else if (message.startsWith("/join"))
                 {
@@ -54,7 +54,13 @@ class ClientHandler implements Runnable
                     if (parts.length == 2)
                         setName(parts[1]);
                 }
-
+                else if (message.startsWith("/leave"))
+                {
+                    System.out.println("Saliendo del grupo");
+                    String[] parts = message.split(" ", 2);
+                    if (parts.length == 2)
+                        ChatServer.removeFromGroup(parts[1], this);
+                }
                 else
                 {
                     System.out.println("Comando no reconocido: " + message);

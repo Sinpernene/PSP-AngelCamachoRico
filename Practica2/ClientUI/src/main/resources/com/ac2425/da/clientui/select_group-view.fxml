@@ -16,7 +16,8 @@
                 </ListView>
                 <HBox alignment="CENTER" spacing="10.0">
                     <Button onAction="#createGroup" text="Create group" />
-                    <Button text="Join" />
+                    <Button onAction="#joinGroup" text="Join" />
+                    <Button onAction="#refreshGroups" text="Reload" />
                 </HBox>
             </children>
             <padding>
