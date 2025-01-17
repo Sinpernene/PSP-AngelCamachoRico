@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.6" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ac2425.da.clientui.SetGroupNameController">
+    <children>
+        <VBox alignment="CENTER" spacing="15.0" layoutX="150.0" layoutY="100.0" prefWidth="300.0">
+            <children>
+                <Label text="Set the group name:" />
+                <TextField fx:id="groupnameField" promptText="Enter the group name" prefWidth="200.0" />
+                <Button onAction="#submitGroupName" text="Submit" />
+            </children>
+            <padding>
+                <Insets top="20.0" bottom="20.0" left="20.0" right="20.0" />
+            </padding>
+        </VBox>
+    </children>
+</AnchorPane>
